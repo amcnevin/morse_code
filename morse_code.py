@@ -1,10 +1,18 @@
 import sys
+import RPi.GPIO as GPIO
+import time
 
 
+
+PIN = 40
 DOT = "."
 DASH = "-"
 WS = " "
+SPEED = 0.3
 
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(PIN, GPIO.OUT)
+GPIO.output(PIN, GPIO.LOW)
 
 def translate_morse_code(input_str):
     """
@@ -16,7 +24,34 @@ def translate_morse_code(input_str):
     for char in input_str:
         morse.extend(convert_char(char, alphabet))
 
-    print(morse)
+    emit_morse_code(morse)
+
+def emit_morse_code(morse_code):
+    for element in morse_code:
+        print(element)
+        if element == WS:
+            emitWS()
+        elif element == DOT:
+            emitDot()
+        elif element == DASH:
+            emitDash()
+        GPIO.output(PIN, GPIO.LOW)
+        time.sleep(3 * SPEED)
+
+
+def emitDot():
+    GPIO.output(PIN, GPIO.HIGH)
+    time.sleep(SPEED)
+    GPIO.output(PIN, GPIO.LOW)
+    time.sleep(SPEED)
+
+def emitDash():
+    GPIO.output(PIN, GPIO.HIGH)
+    time.sleep(3*SPEED)
+
+def emitWS():
+    GPIO.output(PIN, GPIO.LOW)
+    time.sleep(7*SPEED)
 
 
 def convert_char(input_char, alphabet):
