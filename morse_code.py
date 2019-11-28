@@ -27,6 +27,10 @@ def translate_morse_code(input_str):
     emit_morse_code(morse)
 
 def emit_morse_code(morse_code):
+    """
+    light up LED for list of morse code characters
+    :param morse_code: list of morse code characters
+    """
     for element in morse_code:
         print(element)
         if element == WS:
@@ -40,16 +44,25 @@ def emit_morse_code(morse_code):
 
 
 def emitDot():
+    """
+    emit a DOT character
+    """
     GPIO.output(PIN, GPIO.HIGH)
     time.sleep(SPEED)
     GPIO.output(PIN, GPIO.LOW)
     time.sleep(SPEED)
 
 def emitDash():
+    """
+    emit a DASH character
+    """
     GPIO.output(PIN, GPIO.HIGH)
     time.sleep(3*SPEED)
 
 def emitWS():
+    """
+    emit a whitespace character
+    """
     GPIO.output(PIN, GPIO.LOW)
     time.sleep(7*SPEED)
 
